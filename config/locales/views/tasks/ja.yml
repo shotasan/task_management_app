@@ -1,0 +1,11 @@
+ja:
+  tasks:
+    index: '一覧'
+    title: 'タイトル'
+    content: '内容'
+    show: '詳細'
+    edit: '編集'
+    delete: '削除'
+    back: '戻る'
+    new: '新規作成'
+    delete_confirm: '本当に削除しますか？'
