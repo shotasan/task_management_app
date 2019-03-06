@@ -23,25 +23,12 @@ RSpec.feature "タスク管理機能", type: :feature do
   end
 
   scenario "タスク作成のテスト" do
-    # new_task_pathにvisitする（タスク登録ページに遷移する）
-    # 1.ここにnew_task_pathにvisitする処理を書く
     visit new_task_path
-
-    # 「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄に
-    # タスクのタイトルと内容をそれぞれfill_in（入力）する
-    # 2.ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書
     fill_in "タイトル", with: "Test"
-    # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
     fill_in "内容", with: "testtest"
-
-    # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
-    # 4.「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
+    fill_in "締め切り", with: Date.current
     click_on "登録する"
-
-    # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
-    # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
-    # 5.タスク詳細ページに、テストコードで作成したはずのデータ（記述）がhave_contentされているか（含まれているか）を確認（期待）するコードを書く
-    expect(page).to have_content 'testtest'
+    expect(page).to have_content Date.current
   end
 
   scenario "タスク詳細のテスト" do
@@ -58,5 +45,12 @@ RSpec.feature "タスク管理機能", type: :feature do
     @tasks = Task.all.order(created_at: :desc)
     visit tasks_path
     expect(@tasks[0].created_at > @tasks[1].created_at).to be true
+  end
+
+  scenario "タスク一覧画面で終了期限でソートするを押した際に、タスクが締め切り日の昇順で並んでいるかのテスト" do
+    visit tasks_path
+    click_on "終了期限でソートする"
+    @tasks = Task.all.order("limit_date")
+    expect(@tasks[0].limit_date < @tasks[1].limit_date).to be true
   end
 end

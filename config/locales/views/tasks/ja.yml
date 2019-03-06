@@ -3,6 +3,7 @@ ja:
     index: '一覧'
     title: 'タイトル'
     content: '内容'
+    limit_date: '締め切り'
     show: '詳細'
     edit: '編集'
     delete: '削除'

@@ -6,3 +6,4 @@ ja:
       task:
         title: "タイトル"
         content: "内容"
+        limit_date: "締め切り"
