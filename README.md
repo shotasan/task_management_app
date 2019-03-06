@@ -1,6 +1,6 @@
 ### Herokuにデプロイする方法
 - アセットプリコンパイルする `rails assets:precompile RAILS_ENV=production`
-- コミットする `git add -a` `git commit -m "message"`
+- コミットする `git add -A` `git commit -m "message"`
 - デプロイする `git push heroku master`
 ***
 
