@@ -1,3 +1,15 @@
+### Herokuにデプロイする方法
+- アセットプリコンパイルする `rails assets:precompile RAILS_ENV=production`
+- コミットする `git add -a` `git commit -m "message"`
+- デプロイする `git push heroku master`
+***
+
+### バージョン情報
+Ruby 2.6.1
+Rails 5.2.2
+DB psql (PostgreSQL) 11.2
+***
+
 モデル名
 テーブル名
 カラム: データ型
