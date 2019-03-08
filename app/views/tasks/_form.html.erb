@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label :status %>
-    <%= select_tag "name", raw("<option>未着手</option><option>着手中</option><option>完了</option>") %>
+    <%= form.select(:status,['未着手', '着手中', '完了']) %>    
   </div>
 
   <div class="action">

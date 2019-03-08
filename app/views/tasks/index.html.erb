@@ -17,6 +17,7 @@
         <td><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.limit_date%></td>
+        <td><%= task.status%></td>        
         <td><%= link_to t('tasks.show'), task %></td>
         <td><%= link_to t('tasks.edit'), edit_task_path(task) %></td>
         <td><%= link_to t('tasks.delete'), task, method: :delete, data: { confirm: t('tasks.delete_confirm') } %></td>
