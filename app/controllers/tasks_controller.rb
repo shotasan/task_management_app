@@ -2,11 +2,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show,:edit,:update,:destroy]
   def index
     if params[:sort_expired]
-      @tasks = Task.all.order("limit_date")
+      @tasks = Task.all.limit_date
     elsif params[:task]
-      @tasks = Task.where(["title LIKE? and status LIKE?", "%#{ params[:task][:title]}%", "%#{params[:task][:status]}%"])
+      @tasks = Task.sort_title_and_status(params[:task][:title],params[:task][:status])
     else
-      @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.all.sorted
     end
   end
 
