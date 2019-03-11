@@ -10,5 +10,10 @@
   <%= @task.content %>
 </p>
 
+<p>
+  <strong><%= t('tasks.status') %>:</strong>
+  <%= @task.status %>
+</p>
+
 <%= link_to t('tasks.edit'), edit_task_path(@task) %>
 <%= link_to t('tasks.back'), tasks_path %>
