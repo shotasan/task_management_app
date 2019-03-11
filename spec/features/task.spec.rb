@@ -12,6 +12,7 @@ RSpec.feature "タスク管理機能", type: :feature do
     # （「タスク一覧のテスト」でも「タスクが作成日時の降順に並んでいるかのテスト」でも、background内のコードが実行される）
     FactoryBot.create(:task)
     FactoryBot.create(:second_task)
+    FactoryBot.create(:third_task)
   end
 
   scenario "タスク一覧のテスト" do
@@ -52,5 +53,19 @@ RSpec.feature "タスク管理機能", type: :feature do
     click_on "終了期限でソートする"
     @tasks = Task.all.order("limit_date")
     expect(@tasks[0].limit_date < @tasks[1].limit_date).to be true
+  end
+
+  scenario "タスク一覧画面でタイトル検索欄を入力後、検索ボタンを押した際に、検索した用語を含むタスクが並んでいるかのテスト" do
+    visit tasks_path
+    fill_in "task_title", with: "テスト"
+    click_on "Search"
+    expect(page).to have_content "テスト"
+  end
+
+  scenario "タスク一覧画面でstatusを選択し、検索ボタンを押した際に、検索した用語を含むタスクが並んでいるかのテスト" do
+    visit tasks_path
+    select "完了", from: "task_status"
+    click_on "Search"
+    expect(page).to have_content "完了"
   end
 end

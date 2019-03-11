@@ -17,6 +17,7 @@
         <td><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.limit_date%></td>
+        <td><%= task.status%></td>        
         <td><%= link_to t('tasks.show'), task %></td>
         <td><%= link_to t('tasks.edit'), edit_task_path(task) %></td>
         <td><%= link_to t('tasks.delete'), task, method: :delete, data: { confirm: t('tasks.delete_confirm') } %></td>
@@ -24,6 +25,17 @@
     <% end %>
   </tbody>
 </table>
+
+<%= form_with(scope: :task, url: tasks_path, local: true, method: :get) do |form| %>
+  <%= form.label t('tasks.title_search')%>
+  <%= form.text_field :title %>
+
+  <%= form.label t('tasks.status_search') %>
+  <%= form.select(:status,["",'未着手', '着手中', '完了'])%>
+
+  <%#= form.hidden_field :search, value: :true %>
+  <%= submit_tag("Search") %>
+<% end %>
 
 <%= link_to t('tasks.new'), new_task_path %>
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
