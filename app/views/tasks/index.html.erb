@@ -38,6 +38,7 @@
 
   <%#= form.hidden_field :search, value: :true %>
   <%= submit_tag("Search") %>
+<%= paginate @tasks %>
 <% end %>
 
 <%= link_to t('tasks.new'), new_task_path %>

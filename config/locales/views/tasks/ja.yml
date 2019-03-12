@@ -14,3 +14,9 @@ ja:
     status_search: '状態検索'
     status: '状態'
     priority: '優先度'
+  pagination:
+    First: '先頭'
+    last: '末尾'
+    previous: '前'
+    next: '次'
+    truncate: "…"
