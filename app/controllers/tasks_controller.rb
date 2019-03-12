@@ -3,6 +3,8 @@ class TasksController < ApplicationController
   def index
     if params[:sort_expired]
       @tasks = Task.all.limit_date
+    elsif params[:sort_priority]
+      @tasks = Task.all.priority
     elsif params[:task]
       @tasks = Task.sort_title_and_status(params[:task][:title],params[:task][:status])
     else
