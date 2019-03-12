@@ -10,6 +10,7 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all.sorted
     end
+    @tasks = @tasks.page(params[:page]).per(10)
   end
 
   def show
