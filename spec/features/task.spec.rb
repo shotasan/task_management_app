@@ -68,4 +68,11 @@ RSpec.feature "タスク管理機能", type: :feature do
     click_on "Search"
     expect(page).to have_content "完了"
   end
+
+  scenario "タスク一覧画面で優先度でソートするを押した際に、タスクが優先度の降順で並んでいるかのテスト" do
+    visit tasks_path
+    click_on "優先度でソートする"
+    @tasks = Task.priority
+    expect(@tasks[0].priority > @tasks[1].priority).to be true
+  end
 end

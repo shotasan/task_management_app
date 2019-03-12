@@ -12,3 +12,5 @@ ja:
     delete_confirm: '本当に削除しますか？'
     title_search: 'タイトル検索'
     status_search: '状態検索'
+    status: '状態'
+    priority: '優先度'
