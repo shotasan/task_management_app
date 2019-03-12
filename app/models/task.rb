@@ -4,4 +4,5 @@ class Task < ApplicationRecord
   scope :limit_date, -> {order("limit_date")}
   scope :sort_title_and_status, -> (title,status) {where("title LIKE? and status LIKE?", "%#{title}%", "%#{status}%")}
   scope :sorted, -> { order(created_at: :desc) }
+  enum priority: { "低" => 0, "中" => 1, "高" => 2 }
 end
