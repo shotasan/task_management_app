@@ -9,6 +9,12 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <% flash.each do |key, value| %>
+    <% key = "info" if key == "notice" %>
+    <% key = "danger" if key == "alert" %>
+    <%= content_tag(:div, value, class: "alert alert-success alert-#{key}" ,role: "alert") %>
+  <% end %>
+
   <body>
     <%= yield %>
   </body>

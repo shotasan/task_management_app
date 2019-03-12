@@ -1,7 +1,21 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= t('tasks.index') %></h1>
-<table>
+
+<%= link_to t('tasks.new'), new_task_path ,class:"btn btn-primary"%>
+<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true"), class: "btn btn-success" %>
+<%= link_to "優先度でソートする", tasks_path(sort_priority: "true"), class: "btn btn-warning" %>
+
+<%= form_with(scope: :task, url: tasks_path, local: true, method: :get, class: :search_form) do |form| %>
+  <%= form.label t('tasks.title_search')%>
+  <%= form.text_field :title %>
+
+  <%= form.label t('tasks.status_search') %>
+  <%= form.select(:status,["",'未着手', '着手中', '完了'])%>
+
+  <%#= form.hidden_field :search, value: :true %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<table class="table table-borderd">
   <thead>
     <tr>
       <th><%= t('tasks.title') %></th>
@@ -28,19 +42,4 @@
     <% end %>
   </tbody>
 </table>
-
-<%= form_with(scope: :task, url: tasks_path, local: true, method: :get) do |form| %>
-  <%= form.label t('tasks.title_search')%>
-  <%= form.text_field :title %>
-
-  <%= form.label t('tasks.status_search') %>
-  <%= form.select(:status,["",'未着手', '着手中', '完了'])%>
-
-  <%#= form.hidden_field :search, value: :true %>
-  <%= submit_tag("Search") %>
 <%= paginate @tasks %>
-<% end %>
-
-<%= link_to t('tasks.new'), new_task_path %>
-<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
-<%= link_to "優先度でソートする", tasks_path(sort_priority: "true") %>
