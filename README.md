@@ -8,6 +8,7 @@
 Ruby 2.6.1
 Rails 5.2.2
 DB psql (PostgreSQL) 11.2
+bootstrap3
 ***
 
 モデル名
