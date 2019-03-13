@@ -1,3 +1,4 @@
 class User < ApplicationRecord
-  has_many :tasks
+  has_secure_password
+  has_many :tasks, dependent: :destroy
 end
