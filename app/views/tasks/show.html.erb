@@ -1,5 +1,4 @@
-<p id="notice"><%= notice %></p>
-
+<div class="box4">
 <p>
   <strong><%= t('tasks.title') %>:</strong>
   <%= @task.title %>
@@ -11,9 +10,20 @@
 </p>
 
 <p>
+  <strong><%= t('tasks.limit_date') %>:</strong>
+  <%= @task.limit_date %>
+</p>
+
+<p>
   <strong><%= t('tasks.status') %>:</strong>
   <%= @task.status %>
 </p>
 
-<%= link_to t('tasks.edit'), edit_task_path(@task) %>
-<%= link_to t('tasks.back'), tasks_path %>
+<p>
+  <strong><%= t('tasks.priority') %>:</strong>
+  <%= @task.priority %>
+</p>
+</div>
+
+<%= link_to t('tasks.edit'), edit_task_path(@task), class: 'btn btn-default' %>
+<%= link_to t('tasks.back'), tasks_path, class: 'btn btn-default' %>

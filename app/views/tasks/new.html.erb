@@ -1,5 +1,7 @@
+<div class="container">
 <h1><%= t('tasks.new') %></h1>
 
 <%= render 'form', task: @task %>
 
-<%= link_to t('tasks.back'), tasks_path %>
+<%= link_to t('tasks.back'), tasks_path, class: 'btn btn-default' %>
+</div>
