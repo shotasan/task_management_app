@@ -2,13 +2,13 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show,:edit,:update,:destroy]
   def index
     if params[:sort_expired]
-      @tasks = Task.all.limit_date
+      @tasks = current_user.tasks.limit_date
     elsif params[:sort_priority]
-      @tasks = Task.all.priority
+      @tasks = current_user.tasks.priority
     elsif params[:task]
-      @tasks = Task.sort_title_and_status(params[:task][:title],params[:task][:status])
+      @tasks = current_user.tasks.sort_title_and_status(params[:task][:title],params[:task][:status])
     else
-      @tasks = Task.all.sorted
+      @tasks = current_user.tasks.sorted
     end
     @tasks = @tasks.page(params[:page]).per(10)
   end
@@ -24,7 +24,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to tasks_path, notice: "登録に成功しました"
     else
@@ -47,7 +47,7 @@ class TasksController < ApplicationController
 
   private
     def set_task
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find(params[:id])
     end
 
     def task_params

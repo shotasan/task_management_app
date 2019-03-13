@@ -1,0 +1,14 @@
+<div class="box4">
+<p>
+  <strong><%= t('users.name') %>:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong><%= t('users.email') %>:</strong>
+  <%= @user.email %>
+</p>
+</div>
+
+<%= link_to t('tasks.edit'), edit_task_path(@user), class: 'btn btn-default' %>
+<%= link_to t('tasks.back'), tasks_path, class: 'btn btn-default' %>
