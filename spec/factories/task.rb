@@ -8,6 +8,7 @@ FactoryBot.define do
     limit_date { '2020-4-1'}
     status { "完了" }
     priority { "低" }
+    user
   end
 
   # 作成するテストデータの名前を「second_task」とします
