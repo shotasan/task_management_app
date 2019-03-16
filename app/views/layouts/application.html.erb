@@ -11,6 +11,7 @@
   <header>
     <%= render 'layouts/header' %>
   </header>
+  
   <% flash.each do |key, value| %>
     <% key = "info" if key == "notice" %>
     <% key = "danger" if key == "alert" %>
