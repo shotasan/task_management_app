@@ -27,10 +27,10 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class="table-body">
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.title %></td>
+        <td class="task-title"><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.limit_date%></td>
         <td><%= task.status %></td>
