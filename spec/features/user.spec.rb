@@ -63,7 +63,7 @@ RSpec.describe "ユーザー管理機能", type: :feature do
   describe "ユーザのログインのテスト" do
     before do
       user_a.save
-      visit login_path
+      visit new_session_path
     end
 
     context "ログインに成功する場合" do

@@ -10,7 +10,7 @@ RSpec.describe "タスク管理機能", type: :feature do
   let!(:task_d) { FactoryBot.create(:task, title: "Aの3番目のタスク", limit_date: "2021-1-1", priority: "低", user: user_a)}
 
   before do
-    visit login_path
+    visit new_session_path
     fill_in "メールアドレス", with: login_user.email
     fill_in "パスワード", with: login_user.password
     click_on "ログインする"
