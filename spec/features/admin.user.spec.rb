@@ -189,16 +189,19 @@ RSpec.describe "ユーザー管理機能", type: :feature do
     end
   end
 
-  describe "ユーザー削除のテスト" do
+  describe "ユーザー削除のテスト", js: true do
+
     before do
       user_a.save
-      visit admin_users_path
-      click_link "削除"
+      user_a.tasks.create(title: "削除テスト", content: "削除てすよよう")
     end
 
-    it "OKを押すと削除される" do
-      page.driver.browser.switch_to.alert.accept
-      expect{  }.to change{ User.count }.by(-1)
+    it "ユーザーAを削除する" do
+      expect{ user_a.destroy }.to change{ User.count }.by(-1)
+    end
+
+    it "ユーザーAを削除すると、ユーザーAのタスクも削除されること" do
+      expect{ user_a.destroy }.to change{ Task.count }.by(-1)
     end
   end
 
