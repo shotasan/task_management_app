@@ -2,8 +2,18 @@ ja:
   activerecord:
     models:
       task:
+      user:
+      session:
     attributes:
       task:
         title: "タイトル"
         content: "内容"
         limit_date: "締め切り"
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード再確認"
+      session:
+        email: "メールアドレス"
+        password: "パスワード"

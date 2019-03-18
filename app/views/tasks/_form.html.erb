@@ -1,8 +1,7 @@
 <%= form_with( model: task, local: true, class: "form-group") do |form| %>
   <% if task.errors.any? %>
     <div id="error_expanation">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
+      <h2><%= pluralize(task.errors.count, "件のエラーがあります") %></h2>
       <ul>
       <% task.errors.full_messages.each do |message| %>
         <li><%= message %></li>

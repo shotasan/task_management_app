@@ -8,7 +8,10 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <header>
+    <%= render 'layouts/header' %>
+  </header>
+  
   <% flash.each do |key, value| %>
     <% key = "info" if key == "notice" %>
     <% key = "danger" if key == "alert" %>
