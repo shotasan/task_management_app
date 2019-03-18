@@ -1,10 +1,14 @@
 <h1>ユーザー一覧</h1>
 
+<%= link_to '新規ユーザー作成', new_admin_user_path, class: "btn btn-primary" %>
+
 <table class="table table-borderd">
   <thead>
     <tr>
+      <th><%= t('users.id')%></th>
       <th><%= t('users.name') %></th>
       <th><%= t('users.email') %></th>
+      <th><%= t('users.tasks_count') %></th>
       <th><%= t('users.admin') %></th>
       <th><%= t('users.created_at') %></th>
       <th><%= t('users.updated_at') %></th>
@@ -15,8 +19,10 @@
   <tbody class="table-body">
     <% @users.each do |user| %>
       <tr>
+        <td><%= user.id%></td>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
+        <td><%= user.tasks.count %></td>
         <td><%= user.admin? ? 'あり' : 'なし' %></td>
         <td><%= user.created_at %></td>
         <td><%= user.updated_at %></td>

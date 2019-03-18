@@ -1,9 +1,9 @@
 class Admin::UsersController < ApplicationController
   skip_before_action :login_required
-  before_action :set_user, only: [:show, :edit, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all
+    @users = User.all.includes(:tasks)
   end
   
   def show
@@ -22,14 +22,16 @@ class Admin::UsersController < ApplicationController
     if @user.save
       redirect_to admin_users_path, notice: "ユーザー「#{@user.name}」を登録しました"
     else
-      binding.pry
       render :new
     end
   end
 
   def update
+    # binding.pry
     if @user.update(user_params)
       redirect_to admin_user_path(@user), notice: "ユーザー「#{@user.name}」を更新しました"
+    else
+      render :new
     end
   end
 
