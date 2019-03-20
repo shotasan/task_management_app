@@ -52,6 +52,6 @@ class Admin::UsersController < ApplicationController
   
   # ユーザーが管理者権限を持たない場合に例外をスローする
   def require_admin
-    raise Exceptions::AuthenticationError unless current_user.admin?
+    raise Exceptions::AuthenticationError unless current_user&.admin?
   end
 end
