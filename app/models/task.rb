@@ -9,6 +9,6 @@ class Task < ApplicationRecord
 
   enum priority: { "低" => 0, "中" => 1, "高" => 2 }
   
-  has_many :related_of_task_and_label
+  has_many :related_of_task_and_label, dependent: :destroy
   belongs_to :user
 end
