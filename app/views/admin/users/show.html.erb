@@ -1,19 +1,36 @@
-<h1><%= t('tasks.index') %></h1>
+<h1>ユーザー詳細</h1>
 
-<%= link_to t('tasks.new'), new_task_path ,class:"btn btn-primary"%>
-<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true"), class: "btn btn-success" %>
-<%= link_to "優先度でソートする", tasks_path(sort_priority: "true"), class: "btn btn-warning" %>
+<div class="box4">
+  <p>
+    <strong><%= t('users.name') %>:</strong>
+    <%= @user.name %>
+  </p>
 
-<%= form_with(scope: :task, url: tasks_path, local: true, method: :get, class: :search_form) do |form| %>
-  <%= form.label t('tasks.title_search')%>
-  <%= form.text_field :title %>
+  <p>
+    <strong><%= t('users.email') %>:</strong>
+    <%= @user.email %>
+  </p>
 
-  <%= form.label t('tasks.status_search') %>
-  <%= form.select(:status,["",'未着手', '着手中', '完了'])%>
+  <p>
+    <strong><%= t('users.admin') %>:</strong>
+    <%= @user.admin? ? "あり" : "なし" %>
+  </p>
 
-  <%= submit_tag("Search") %>
-<% end %>
+  <p>
+    <strong><%= t('users.created_at') %>:</strong>
+    <%= @user.created_at %>
+  </p>
 
+  <p>
+    <strong><%= t('users.updated_at') %>:</strong>
+    <%= @user.updated_at %>
+  </p>
+
+  <%= link_to t('tasks.edit'), edit_admin_user_path(@user) %>
+  <%= link_to t('tasks.delete'), admin_user_path(@user), method: :delete, data: { confirm: t('tasks.delete_confirm') } %>
+</div>
+
+<h1><%= @user.name %>のタスク一覧 </h1>
 <table class="table table-borderd">
   <thead>
     <tr>
@@ -27,7 +44,7 @@
   </thead>
 
   <tbody class="table-body">
-    <% @tasks.each do |task| %>
+    <% @user.tasks.each do |task| %>
       <tr>
         <td class="task-title"><%= task.title %></td>
         <td><%= task.content %></td>
@@ -41,4 +58,5 @@
     <% end %>
   </tbody>
 </table>
-<%= paginate @tasks %>
+
+<%= link_to t('tasks.back'), admin_users_path, class: 'btn btn-default' %>
