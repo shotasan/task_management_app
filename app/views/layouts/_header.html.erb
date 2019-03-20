@@ -1,8 +1,11 @@
 <div class="page-header">
 	<h1>タスク管理アプリ</h1>
   <% if current_user %>
-    <%= link_to 'ユーザー情報', user_path(current_user.id) %>
-    <%= link_to 'ログアウト', sessions_path, method: :delete %>
+    <%= link_to 'ユーザー情報', user_path(current_user) %>
+    <%= link_to 'ログアウト', session_path(current_user), method: :delete %>
+    <% if current_user.admin? %>
+      <%= link_to 'ユーザー一覧', admin_users_path %>
+    <% end %>
   <% else %>
     <%= link_to 'ログイン', new_session_path %>
     <%= link_to '新規登録', new_user_path %>

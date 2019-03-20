@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   skip_before_action :login_required
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin
 
   def index
     @users = User.all.includes(:tasks)
@@ -46,5 +47,9 @@ class Admin::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def require_admin
+    redirect_to root_path unless current_user&.admin?
   end
 end

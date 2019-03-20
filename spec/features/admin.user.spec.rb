@@ -137,11 +137,11 @@ RSpec.describe "ユーザー管理機能", type: :feature do
       end
 
       it "ユーザーAのタスクが表示される" do
-        expect(page).to have_content user_a.tasks.first.title
+        expect(page).to have_content task_of_user_a.first.title
       end
 
       it "ユーザーBのタスクが表示されない" do
-        expect(page).not_to have_content user_b.tasks.first.title
+        expect(page).not_to have_content task_of_user_b.first.title
       end
     end
     
@@ -204,5 +204,4 @@ RSpec.describe "ユーザー管理機能", type: :feature do
       expect{ user_a.destroy }.to change{ Task.count }.by(-1)
     end
   end
-
 end
