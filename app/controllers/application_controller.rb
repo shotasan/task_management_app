@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   # Admin::UsersControllerでraiseされたExceptions::AuthenticationErrorを拾う
   rescue_from Exceptions::AuthenticationError, with: :user_not_authorized
+  rescue_from Exceptions::AdminUserDstroyError, with: :admin_user_not_destroy
   # ビューで使用できるようにするため
   helper_method :current_user
   before_action :login_required
@@ -10,6 +11,11 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash.now[:error] = "権限が無いよ"
     render file: "/public/AuthenticationError"
+  end
+
+  def admin_user_not_destroy
+    flash[:error] = "消しちゃダメです"
+    redirect_to admin_users_url
   end
   
   def current_user
