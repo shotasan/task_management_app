@@ -16,3 +16,10 @@ require 'faker'
     password: password,
   )
 end
+
+User.create(
+  name: "Admin_User",
+  email: "admin@admin.admin",
+  password: "password",
+  admin: true
+)
