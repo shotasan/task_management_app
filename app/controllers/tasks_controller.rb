@@ -2,12 +2,16 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show,:edit,:update,:destroy]
 
   def index
-    if params[:sort_expired]
-      @tasks = current_user.tasks.limit_date
-    elsif params[:sort_priority]
-      @tasks = current_user.tasks.priority
-    elsif params[:task]
-      @tasks = current_user.tasks.sort_title_and_status(params[:task][:title],params[:task][:status])
+    if params[:task]
+      if params[:sort_expired]
+        @tasks = current_user.tasks.limit_date
+      elsif params[:sort_priority]
+        @tasks = current_user.tasks.priority
+      elsif params[:task][:label_id].present?
+        @tasks = Label.find(params[:task][:label_id]).related_tasks
+      else
+        @tasks = current_user.tasks.sort_title_and_status(params[:task][:title],params[:task][:status])
+      end
     else
       @tasks = current_user.tasks.sorted
     end
@@ -30,7 +34,6 @@ class TasksController < ApplicationController
       params[:task][:label_ids].each do |i|
         @task.related_of_task_and_labels.create(label_id: i.to_i)
       end
-      binding.pry
       redirect_to tasks_path, notice: "登録に成功しました"
     else
       render :new
@@ -62,6 +65,7 @@ class TasksController < ApplicationController
                                    :status,
                                    :search,
                                    :priority,
+                                   :label_id,
                                    related_of_task_and_labels_attributes: [label_ids: []]
       )
     end

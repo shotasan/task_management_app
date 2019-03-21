@@ -23,6 +23,13 @@
   <strong><%= t('tasks.priority') %>:</strong>
   <%= @task.priority %>
 </p>
+
+<p>
+  <strong><%= t('tasks.label') %>:</strong>
+  <% @task.related_labels.each do |label| %>
+    <%= label.title %>
+  <% end %>
+</p>
 </div>
 
 <%= link_to t('tasks.edit'), edit_task_path(@task), class: 'btn btn-default' %>

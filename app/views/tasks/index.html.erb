@@ -11,6 +11,11 @@
   <%= form.label t('tasks.status_search') %>
   <%= form.select(:status,["",'未着手', '着手中', '完了'])%>
 
+  <%= form.hidden_field :search, value: "true" %>
+
+  <%= form.label t('tasks.label') %>
+  <%= form.select(:label_id, Label.all.map{ |l| [l.title, l.id]}, include_blank: true) %>
+
   <%= submit_tag("Search") %>
 <% end %>
 
