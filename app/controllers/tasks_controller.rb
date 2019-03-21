@@ -27,6 +27,10 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.build(task_params)
     if @task.save
+      params[:task][:label_ids].each do |i|
+        @task.related_of_task_and_labels.create(label_id: i.to_i)
+      end
+      binding.pry
       redirect_to tasks_path, notice: "登録に成功しました"
     else
       render :new
@@ -58,6 +62,7 @@ class TasksController < ApplicationController
                                    :status,
                                    :search,
                                    :priority,
+                                   related_of_task_and_labels_attributes: [label_ids: []]
       )
     end
 end
