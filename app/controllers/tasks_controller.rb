@@ -4,6 +4,7 @@ class TasksController < ApplicationController
   def index
     if params[:task]
       if params[:sort_expired]
+        binding.pry
         @tasks = current_user.tasks.limit_date
       elsif params[:sort_priority]
         @tasks = current_user.tasks.priority

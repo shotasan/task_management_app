@@ -9,7 +9,8 @@ class Admin::LabelsController < ApplicationController
     if @label.save
       redirect_to admin_labels_path, notice: "ラベル: #{@label.title}を追加しました"
     else
-      render :new
+      # バリデーションにかかった場合はフラッシュでエラーメッセージを表示
+      redirect_to admin_labels_path, flash: { error: @label.errors.full_messages[0]}
     end
   end
 

@@ -18,3 +18,6 @@ ja:
       session:
         email: "メールアドレス"
         password: "パスワード"
+      label:
+        title: "ラベル名"
+        new_label: "新規ラベル"

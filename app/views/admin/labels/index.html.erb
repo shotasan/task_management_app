@@ -3,7 +3,7 @@
 <%= form_with(model: [:admin, @label], local: true, class: "form-group") do |form| %>
  
   <div class="field form-group">
-    <%= form.label :title %>
+    <%= form.label :new_label %>
     <%= form.text_field :title, class: "form-control" %>
   </div>
 
@@ -27,7 +27,7 @@
   <tbody class="table-body">
     <% @labels.each do |label| %>
       <tr>
-        <td><%= label.id%></td>
+        <td><%= label.id %></td>
         <td><%= label.title %></td>
         <td><%= label.related_tasks.count %></td>
         <td><%= label.created_at %></td>
