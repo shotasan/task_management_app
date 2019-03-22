@@ -1,0 +1,39 @@
+<h1>ラベル一覧</h1>
+
+<%= form_with(model: [:admin, @label], local: true, class: "form-group") do |form| %>
+ 
+  <div class="field form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="action">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<table class="table table-borderd">
+  <thead>
+    <tr>
+      <th><%= t('labels.id')%></th>
+      <th><%= t('labels.title') %></th>
+      <th><%= t('labels.count') %></th>
+      <th><%= t('labels.created_at') %></th>
+      <th><%= t('labels.updated_at') %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="table-body">
+    <% @labels.each do |label| %>
+      <tr>
+        <td><%= label.id%></td>
+        <td><%= label.title %></td>
+        <td><%= label.related_tasks.count %></td>
+        <td><%= label.created_at %></td>
+        <td><%= label.updated_at %></td>
+        <td><%= link_to t('tasks.delete'), admin_label_path(label), method: :delete, data: { confirm: t('tasks.delete_confirm') } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

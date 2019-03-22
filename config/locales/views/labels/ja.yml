@@ -1,0 +1,6 @@
+ja:
+  labels:
+    title: "ラベル名"
+    count: "ラベルが付いているタスクの数"
+    created_at: "登録日時"
+    updated_at: "更新日時"
