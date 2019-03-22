@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  before_action :require_admin
   skip_before_action :login_required
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -38,6 +39,7 @@ class Admin::UsersController < ApplicationController
     @user.destroy
     redirect_to admin_users_path, notice: "ユーザー「#{@user.name}」を削除しました"
   end
+
   private
 
   def user_params
@@ -46,5 +48,10 @@ class Admin::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+  
+  # ユーザーが管理者権限を持たない場合に例外をスローする
+  def require_admin
+    raise Exceptions::AuthenticationError unless current_user&.admin?
   end
 end

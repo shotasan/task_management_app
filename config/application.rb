@@ -30,5 +30,7 @@ module TaskManagementApp
     # the framework and any gems in your application.
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+    # libのexceptions.rbにアクセスするためのパス
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end
 end
