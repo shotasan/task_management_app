@@ -15,18 +15,18 @@ class TasksController < ApplicationController
     end
 
     if params[:task]
-      # ラベルでソートした場合。
-      if params[:label_id]
-        @tasks = Label.find(params[:task][:label_id]).related_tasks
+      # ラベルで検索した場合
+      if params[:task][:label_id].presence
+        @tasks = Label.find(params[:task][:label_id]).related_tasks.where(user_id: current_user.id)
 
-      # paramsにserchがあれば検索を実行する
+      # タイトルか状態で検索した場合
       else params[:task][:search]
         @tasks = current_user.tasks.sort_title_and_status(params[:task][:title],params[:task][:status])
       end
     end
     
     # ページネーションのための記載
-    @tasks = @tasks.page(params[:page]).per(10)
+    @tasks = @tasks.page(params[:page])
   end
 
   def show

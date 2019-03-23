@@ -8,6 +8,8 @@ class Task < ApplicationRecord
   scope :sorted, -> { order(created_at: :desc) }
 
   enum priority: { "低" => 0, "中" => 1, "高" => 2 }
+
+  paginates_per 10
   
   has_many :related_of_task_and_labels, dependent: :destroy
   has_many :related_labels, through: :related_of_task_and_labels, source: :label
