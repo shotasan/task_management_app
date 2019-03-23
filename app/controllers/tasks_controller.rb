@@ -1,21 +1,31 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show,:edit,:update,:destroy]
-
+  
   def index
+    # 通常の場合
+    @tasks = current_user.tasks.sorted
+
+    # 終了期限でソートした場合
+    if params[:sort_expired]
+      @tasks = current_user.tasks.limit_date 
+
+    # 重要度でソートした場合
+    elsif params[:sort_priority]
+      @tasks = current_user.tasks.priority
+    end
+
     if params[:task]
-      if params[:sort_expired]
-        binding.pry
-        @tasks = current_user.tasks.limit_date
-      elsif params[:sort_priority]
-        @tasks = current_user.tasks.priority
-      elsif params[:task][:label_id].present?
+      # ラベルでソートした場合。
+      if params[:label_id]
         @tasks = Label.find(params[:task][:label_id]).related_tasks
-      else
+
+      # paramsにserchがあれば検索を実行する
+      else params[:task][:search]
         @tasks = current_user.tasks.sort_title_and_status(params[:task][:title],params[:task][:status])
       end
-    else
-      @tasks = current_user.tasks.sorted
     end
+    
+    # ページネーションのための記載
     @tasks = @tasks.page(params[:page]).per(10)
   end
 
@@ -32,7 +42,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.build(task_params)
     if @task.save
-      params[:task][:label_ids].each do |i|
+      params[:task][:label_ids]&.each do |i|
         @task.related_of_task_and_labels.create(label_id: i.to_i)
       end
       redirect_to tasks_path, notice: "登録に成功しました"
