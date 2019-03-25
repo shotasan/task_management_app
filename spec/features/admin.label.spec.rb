@@ -11,35 +11,51 @@ RSpec.describe "ラベル管理機能", type: :feature do
     visit admin_labels_path
   end
 
-  describe "新規登録が成功する場合" do
-
+  describe "一覧表示機能のテスト" do
     before do
-    fill_in "label_title", with: "ラベル１"
-    click_on "登録する"
+      FactoryBot.create(:label, title: "ラベルラベルラベル")
+      visit admin_labels_path
     end
-
-    it "新規ラベルの登録ができること" do
-      expect(page).to have_content "ラベル１を追加しました"
-    end
-
-    it "ラベルを登録するとラベル一覧に表示されること" do
+    it "登録ずみのラベルが一覧に表示される" do
       within ".table-body" do
-        expect(page).to have_content "ラベル１"
+        expect(page).to have_content "ラベルラベルラベル"
       end
     end
+
   end
 
-  describe "新規登録が失敗する場合" do
-
-    it "空欄のまま登録するとエラーメッセージが表示されること" do
+  describe "ラベルの新規登録機能のテスト" do
+    
+    describe "新規登録が成功する場合" do
+  
+      before do
+      fill_in "label_title", with: "ラベル１"
       click_on "登録する"
-      expect(page).to have_content "ラベル名を入力してください"
+      end
+  
+      it "新規ラベルの登録ができること" do
+        expect(page).to have_content "ラベル１を追加しました"
+      end
+  
+      it "ラベルを登録するとラベル一覧に表示されること" do
+        within ".table-body" do
+          expect(page).to have_content "ラベル１"
+        end
+      end
     end
-
-    it "30文字以上を入力して登録するとエラーメッセージが表示されること" do
-      fill_in "label_title", with: "a" * 31
-      click_on "登録する"
-      expect(page).to have_content "ラベル名は30文字以内で入力してください"
+  
+    describe "新規登録が失敗する場合" do
+  
+      it "空欄のまま登録するとエラーメッセージが表示されること" do
+        click_on "登録する"
+        expect(page).to have_content "ラベル名を入力してください"
+      end
+  
+      it "30文字以上を入力して登録するとエラーメッセージが表示されること" do
+        fill_in "label_title", with: "a" * 31
+        click_on "登録する"
+        expect(page).to have_content "ラベル名は30文字以内で入力してください"
+      end
     end
   end
 
