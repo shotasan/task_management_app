@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # このrequireで、Capybaraなどの、Feature Specに必要な機能を使用可能な状態にしています
 require 'rails_helper'
 # RSpec.feature
