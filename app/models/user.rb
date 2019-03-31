@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :tasks, dependent: :destroy
+  has_many :group_participants, dependent: :destroy
 
   private
 
@@ -21,7 +22,7 @@ class User < ApplicationRecord
   # adminがtrueのユーザー（管理者権限あり）がゼロにならないようにエラーを発生させる
   def deleting_ok?
     users = User.all
-    admin_user_count = users.select{ |user| user.admin == true }.count
+    admin_user_count = users.select{ |user| user.admin}.count
     if admin_user_count <= 1
       raise Exceptions::AdminUserDstroyError
     end
