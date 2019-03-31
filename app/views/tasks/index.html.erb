@@ -11,9 +11,18 @@
   <%= form.label t('tasks.status_search') %>
   <%= form.select(:status,["",'未着手', '着手中', '完了'])%>
 
+  <%= form.hidden_field :search, value: "true" %>
+
+  <%= form.label t('tasks.label') %>
+  <%= form.select(:label_id, Label.all.map{ |l| [l.title, l.id]}, include_blank: true) %>
+
   <%= submit_tag("Search") %>
 <% end %>
 
+<h3><span class="over_deadline_tasks">締め切り超過</span>・<span class="still_deadline_tasks">締め切り５日前</span>タスク一覧</h3>
+<%= render "deadline_tasks", deadline_tasks: @deadline_tasks %>
+
+<h3>タスク一覧</h3>
 <table class="table table-borderd">
   <thead>
     <tr>

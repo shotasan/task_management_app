@@ -14,6 +14,7 @@ ja:
     status_search: '状態検索'
     status: '状態'
     priority: '優先度'
+    label: "ラベル"
   pagination:
     First: '先頭'
     last: '末尾'

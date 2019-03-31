@@ -21,11 +21,13 @@
 /storage/*
 !/storage/.keep
 
-/node_modules
 /yarn-error.log
 
-/public/assets
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Covers JetBrains IDEs: RubyMine
+.idea/**/workspace.xml
+.idea/**/tasks.xml

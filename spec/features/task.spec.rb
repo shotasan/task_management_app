@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # このrequireで、Capybaraなどの、Feature Specに必要な機能を使用可能な状態にしています
 require 'rails_helper'
 # RSpec.feature
@@ -66,6 +68,14 @@ RSpec.describe "タスク管理機能", type: :feature do
           expect(task_titles).to eq %w(Aの2番目のタスク Aの最初のタスク Aの3番目のタスク)          
         end
       end
+
+      it "一覧画面でラベルを選択し、Searchボタンを押すと、選択したラベルと紐づくタスクが表示される" do
+        task_a.related_labels.create(title: "重要")
+        visit tasks_path
+        select "重要", from: "task_label_id"
+        click_on "Search"
+        expect(page).to have_content task_a.title
+      end
     end
 
     context "ユーザーBがログインしているとき" do
@@ -123,6 +133,7 @@ RSpec.describe "タスク管理機能", type: :feature do
       let(:login_user) { user_a }
 
       before do
+        task_a.related_labels.create(title: "重要")
         visit task_path(task_a)
       end
 
@@ -130,11 +141,16 @@ RSpec.describe "タスク管理機能", type: :feature do
         expect(page).to have_content "最初のタスク"
       end
 
+      it "ユーザーAが作成したタスクのラベルが表示される" do
+        expect(page).to have_content "重要"
+      end
+
       it "ユーザーBが作成したタスクが表示されない" do
         expect(page).not_to have_content "Bの最初のタスク"
       end
 
       it "ユーザーBの詳細画面に遷移するとエラー画面が表示される" do
+        task_a.related_labels.create(title: "ラベルA")
         visit task_path(task_b)
         expect(page.status_code).to eq 404
       end

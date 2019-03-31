@@ -5,6 +5,7 @@
     <%= link_to 'ログアウト', session_path(current_user), method: :delete %>
     <% if current_user.admin? %>
       <%= link_to 'ユーザー一覧', admin_users_path %>
+      <%= link_to 'ラベル一覧', admin_labels_path %>
     <% end %>
   <% else %>
     <%= link_to 'ログイン', new_session_path %>

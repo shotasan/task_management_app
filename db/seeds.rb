@@ -23,3 +23,7 @@ User.create(
   password: "password",
   admin: true
 )
+
+Label.create(
+  title: "重要"
+)

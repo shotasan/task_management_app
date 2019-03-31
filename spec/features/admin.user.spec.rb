@@ -2,63 +2,75 @@ require 'rails_helper'
 
 RSpec.describe "ユーザー管理機能", type: :feature do
   let(:user_a) { FactoryBot.build(:user, name: "ユーザーA", email: "a@example.com", password: "password")}
-
-  describe "管理者ユーザーの新規登録のテスト" do
-    before do
-      visit new_admin_user_path
-    end
-
-    context "登録に成功する場合" do
+  let(:admin_user) { FactoryBot.create(:user, name: "admin_user", admin: true)}
+  before do
+    visit new_session_path
+    fill_in "メールアドレス", with: admin_user.email
+    fill_in "パスワード", with: admin_user.password
+    click_on "ログインする"
+  end
+  
+  describe "ユーザー新規登録のテスト" do
+    
+    context "管理者ユーザーを登録する場合" do
       before do
-        fill_in "名前", with: user_a.name
-        fill_in "メールアドレス", with: user_a.email
-        check "管理者権限"
-        fill_in "パスワード", with: user_a.password
-        fill_in "パスワード再確認", with: user_a.password
-        click_on "アカウント登録"
+        click_on "ユーザー一覧"
+        click_on "新規ユーザー作成"
       end
-
-      it "正常に登録し、一覧画面が表示される" do
-        expect(page).to have_content "ユーザー「#{user_a.name}」を登録しました"
-        expect(page).to have_content "ユーザー一覧"
+      
+      context "登録に成功する場合" do
+        before do
+          fill_in "名前", with: user_a.name
+          fill_in "メールアドレス", with: user_a.email
+          check "管理者権限"
+          fill_in "パスワード", with: user_a.password
+          fill_in "パスワード再確認", with: user_a.password
+          click_on "アカウント登録"
+        end
+  
+        it "正常に登録し、一覧画面が表示される" do
+          expect(page).to have_content "ユーザー「#{user_a.name}」を登録しました"
+          expect(page).to have_content "ユーザー一覧"
+        end
+      end
+  
+      context "登録に失敗する場合" do
+        before do
+          user_a.save
+        end
+  
+        it "登録ずみのメールアドレスを使用すると警告が表示される" do
+          fill_in "メールアドレス", with: user_a.email
+          click_on "アカウント登録"
+          expect(page).to have_selector ".alert-warning"
+        end
+  
+        it "名前だけ入力すると警告が表示される" do
+          fill_in "名前", with: user_a.name
+          click_on "アカウント登録"
+          expect(page).to have_selector ".alert-warning"
+        end
+  
+        it "メールアドレスだけ入力すると警告が表示される" do
+          fill_in "メールアドレス", with: user_a.email
+          click_on "アカウント登録" 
+          expect(page).to have_selector ".alert-warning"
+        end
+  
+        it "パスワードだけ入力すると警告が表示される" do
+          fill_in "パスワード", with: user_a.password
+          click_on "アカウント登録" 
+          expect(page).to have_selector ".alert-warning"
+        end
+  
+        it "パズワード再確認だけ入力すると警告が表示される" do
+          fill_in "パスワード再確認", with: user_a.password
+          click_on "アカウント登録" 
+          expect(page).to have_selector ".alert-warning"
+        end
       end
     end
 
-    context "登録に失敗する場合" do
-      before do
-        user_a.save
-      end
-
-      it "登録ずみのメールアドレスを使用すると警告が表示される" do
-        fill_in "メールアドレス", with: user_a.email
-        click_on "アカウント登録"
-        expect(page).to have_selector ".alert-warning"
-      end
-
-      it "名前だけ入力すると警告が表示される" do
-        fill_in "名前", with: user_a.name
-        click_on "アカウント登録"
-        expect(page).to have_selector ".alert-warning"
-      end
-
-      it "メールアドレスだけ入力すると警告が表示される" do
-        fill_in "メールアドレス", with: user_a.email
-        click_on "アカウント登録" 
-        expect(page).to have_selector ".alert-warning"
-      end
-
-      it "パスワードだけ入力すると警告が表示される" do
-        fill_in "パスワード", with: user_a.password
-        click_on "アカウント登録" 
-        expect(page).to have_selector ".alert-warning"
-      end
-
-      it "パズワード再確認だけ入力すると警告が表示される" do
-        fill_in "パスワード再確認", with: user_a.password
-        click_on "アカウント登録" 
-        expect(page).to have_selector ".alert-warning"
-      end
-    end
   end
 
   describe "ユーザー一覧のテスト" do
@@ -101,10 +113,8 @@ RSpec.describe "ユーザー管理機能", type: :feature do
 
     before do
       user_a.save
-      user_a.tasks.create(title: "tteesstt", content: "TEST")
-      user_b.tasks.create(title: "てすと", content: "ててすすとと")
-      task_of_user_a = user_a.tasks
-      task_of_user_b = user_b.tasks
+      @task_of_user_a = user_a.tasks.create(title: "tteesstt", content: "TEST")
+      @task_of_user_b = user_b.tasks.create(title: "てすと", content: "ててすすとと")
     end
     
     context "ユーザーAの詳細画面を表示する場合" do
@@ -137,11 +147,11 @@ RSpec.describe "ユーザー管理機能", type: :feature do
       end
 
       it "ユーザーAのタスクが表示される" do
-        expect(page).to have_content task_of_user_a.first.title
+        expect(page).to have_content @task_of_user_a.title
       end
 
       it "ユーザーBのタスクが表示されない" do
-        expect(page).not_to have_content task_of_user_b.first.title
+        expect(page).not_to have_content @task_of_user_b.title
       end
     end
     
