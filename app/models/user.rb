@@ -11,6 +11,7 @@ class User < ApplicationRecord
   
   has_many :tasks, dependent: :destroy
   has_many :group_participants, dependent: :destroy
+  has_many :groups, through: :group_participants
 
   private
 

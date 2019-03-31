@@ -16,7 +16,7 @@ class Task < ApplicationRecord
   paginates_per 10
 
   has_many :related_of_task_and_labels, dependent: :destroy
-  has_many :related_labels, through: :related_of_task_and_labels, source: :label
+  has_many :labels, through: :related_of_task_and_labels
   belongs_to :user
   accepts_nested_attributes_for :related_of_task_and_labels
 end
