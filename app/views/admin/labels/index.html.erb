@@ -1,7 +1,6 @@
 <h1>ラベル一覧</h1>
 
 <%= form_with(model: [:admin, @label], local: true, class: "form-group") do |form| %>
- 
   <div class="field form-group">
     <%= form.label :new_label %>
     <%= form.text_field :title, class: "form-control" %>

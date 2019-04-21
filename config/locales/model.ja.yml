@@ -21,3 +21,5 @@ ja:
       label:
         title: "ラベル名"
         new_label: "新規ラベル"
+      group:
+        name: "グループ名"

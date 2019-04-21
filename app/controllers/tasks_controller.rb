@@ -9,7 +9,6 @@ class TasksController < ApplicationController
     # 終了期限でソートした場合
     if params[:sort_expired]
       @tasks = current_user.tasks.limit_date_sort
-
     # 重要度でソートした場合
     elsif params[:sort_priority]
       @tasks = current_user.tasks.priority

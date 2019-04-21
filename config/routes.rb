@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   end
   resources :tasks
   resources :users
+  resources :groups
   resources :sessions, only: [:new, :create, :destroy]
 end
